@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BottomBarView">
+        <attr name="bottomBarTheme" format="integer">
+            <enum name="dark" value="0"/>
+            <enum name="light" value="1"/>
+        </attr>
+        <attr name="noOfButtons" format="integer"/>
+    </declare-styleable>
+</resources>
