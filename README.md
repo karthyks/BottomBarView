@@ -110,3 +110,12 @@ Import as a module into your android project.
   }
   </code>
 </pre>
+
+<br/>
+<br/>
+<br/>
+
+<h4>*** Note *** </h4>
+<h6>Changes are appreciated</h6>
+<p>Feel free to edit your changes in the library.Since this is my first library project, I am sure there will be a lot of suggestions from Geekies.</p>
+<p>Create your new branch "GITHUB_ID/CHANGE_DESC" from the master, Commit your changes with proper commit messages and request a pull.</p>
