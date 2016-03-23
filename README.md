@@ -60,17 +60,17 @@ Import as a module into your android project.
               android:gravity="center"
               android:orientation="horizontal">
     <com.karthyks.bottombarview.views.BottomBarButton
-        android:id="@+id/btn_waiting"
+        android:id="@+id/btn_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <com.karthyks.bottombarview.views.BottomBarButton
-        android:id="@+id/btn_boarded"
+        android:id="@+id/btn_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <com.karthyks.bottombarview.views.BottomBarButton
-        android:id="@+id/btn_reached"
+        android:id="@+id/btn_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>
@@ -87,24 +87,24 @@ Import as a module into your android project.
 <pre>
   <code>
   private void buildBottomBarButtons() {
-    bbnWaiting.setButtonDrawables(int DrawableNormal, int DrawablePressed)
+    btn1.setButtonDrawables(int DrawableNormal, int DrawablePressed)
         .setButtonText("BUTTON_TEXT")
         .setTextColors(int colorNormal, int colorPressed)
         .setBgColor(Color.GRAY)
         .build();
-    bbnBoarded.setButtonDrawables(int DrawableNormal, int DrawablePressed)
+    btn2.setButtonDrawables(int DrawableNormal, int DrawablePressed)
         .setButtonText("BUTTON_TEXT")
         .setTextColors(int colorNormal, int colorPressed)
         .setBgColor(Color.GRAY)
         .build();
-    bbnReached.setButtonDrawables(int DrawableNormal, int DrawablePressed)
+    btn3.setButtonDrawables(int DrawableNormal, int DrawablePressed)
         .setButtonText("BUTTON_TEXT")
         .setTextColors(int colorNormal, int colorPressed)
         .setBgColor(Color.GRAY)
         .build();
-    bbnWaiting.setOnClickListener(this);
-    bbnBoarded.setOnClickListener(this);
-    bbnReached.setOnClickListener(this);
+    btn1.setOnClickListener(this);
+    btn2.setOnClickListener(this);
+    btn3.setOnClickListener(this);
   }
   </code>
 </pre>
