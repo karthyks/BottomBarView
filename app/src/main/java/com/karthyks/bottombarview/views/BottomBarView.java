@@ -56,7 +56,7 @@ public class BottomBarView extends LinearLayout {
     }
   }
 
-  private void setBgColor(int color) {
+  public void setBgColor(int color) {
     parentFrame.setBackgroundColor(color);
     Log.d(TAG, "getViewContent: " + parentFrame.getHeight());
   }

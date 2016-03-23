@@ -29,6 +29,8 @@ public class BottomBarButton extends LinearLayout {
   private int textColorNormal;
   private int textColorPressed;
 
+  private int bgColor;
+
   private String buttonText;
   private Context context;
 
@@ -64,6 +66,7 @@ public class BottomBarButton extends LinearLayout {
     textViewButtonText.setTextColor(textColorNormal);
     textViewButtonText.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimension(R.dimen
         .bottom_bar_text_normal));
+    view.setBackgroundColor(bgColor);
     this.addView(view);
   }
 
@@ -92,6 +95,11 @@ public class BottomBarButton extends LinearLayout {
     } else {
       onReleased();
     }
+  }
+
+  public BottomBarButton setBgColor(int color) {
+    this.bgColor = color;
+    return this;
   }
 
   public BottomBarButton setButtonDrawables(Drawable normalState, Drawable pressedState) {
