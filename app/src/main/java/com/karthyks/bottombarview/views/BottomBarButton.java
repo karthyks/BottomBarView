@@ -2,8 +2,10 @@ package com.karthyks.bottombarview.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,35 +13,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.karthyks.bottombarview.R;
-import com.karthyks.bottombarview.drawable.BBNDrawable;
 
 public class BottomBarButton extends LinearLayout {
 
   private static final String TAG = BottomBarButton.class.getSimpleName();
-  public static final int DEFAULT_ID = 990000002;
-  public static final int MULTIPLICATION_FACTOR = 10 * 10;
 
-  private int buttonBg;
-  private String buttonText;
-  private OnClickListener listener;
   private boolean pressedState;
   private ImageView imageViewButtonBg;
   private TextView textViewButtonText;
 
-  private int maxWidth;
-  private int minWidth;
-  private int height;
 
-  private int id;
+  private Drawable buttonNormalDrawable;
+  private Drawable buttonPressedDrawable;
 
-  public BottomBarButton(Context context, int drawable, String text, int id,
-                         OnClickListener listener) {
+  private int textColorNormal;
+  private int textColorPressed;
+
+  private String buttonText;
+
+  public BottomBarButton(Context context) {
     super(context);
-    buttonBg = drawable;
-    buttonText = text;
-    this.listener = listener;
-    this.id = id;
-    init();
   }
 
   public BottomBarButton(Context context, AttributeSet attrs) {
@@ -56,59 +49,64 @@ public class BottomBarButton extends LinearLayout {
     super(context, attrs, defStyleAttr, defStyleRes);
   }
 
-  private void init() {
+  public void build() {
     View view = LayoutInflater.from(getContext()).inflate(R.layout.custom_button, this, false);
     imageViewButtonBg = (ImageView) view.findViewById(R.id.img_button_bg);
-    imageViewButtonBg.setImageDrawable(new BBNDrawable(getContext(), buttonBg,
-        BBNDrawable.NORMAL_STATE));
+    imageViewButtonBg.setImageDrawable(buttonNormalDrawable);
     pressedState = false;
-    this.setOnClickListener(listener);
     textViewButtonText = (TextView) view.findViewById(R.id.txt_button_text);
     textViewButtonText.setText(buttonText);
-    minWidth = (int) getContext().getResources().getDimension(
-        R.dimen.bottom_bar_button_inactive_width);
-    maxWidth = (int) getContext().getResources().getDimension(
-        R.dimen.bottom_bar_button_active_width);
-    height = (int) getContext().getResources().getDimension(
-        R.dimen.bottom_bar_default_height);
+    textViewButtonText.setTextColor(textColorNormal);
+    textViewButtonText.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimension(R.dimen
+        .bottom_bar_text_normal));
     this.addView(view);
   }
 
-  private void changeWidth(int width) {
-    LayoutParams layoutParams = new LayoutParams(width, height);
-    this.setLayoutParams(layoutParams);
-  }
-
   public void onPressed() {
-    changeWidth(maxWidth);
-    imageViewButtonBg.setImageDrawable(new BBNDrawable(getContext(), buttonBg,
-        BBNDrawable.PRESSED_STATE));
+    imageViewButtonBg.setImageDrawable(buttonPressedDrawable);
     pressedState = true;
-    textViewButtonText.setVisibility(VISIBLE);
+    //textViewButtonText.setVisibility(VISIBLE);
+    textViewButtonText.setTextColor(textColorPressed);
+    textViewButtonText.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimension(R.dimen
+        .bottom_bar_text_pressed));
   }
 
   public void onReleased() {
-    changeWidth(minWidth);
-    imageViewButtonBg.setImageDrawable(new BBNDrawable(getContext(), buttonBg,
-        BBNDrawable.NORMAL_STATE));
+    imageViewButtonBg.setImageDrawable(buttonNormalDrawable);
     pressedState = false;
-    textViewButtonText.setVisibility(GONE);
+    //textViewButtonText.setVisibility(GONE);
+    textViewButtonText.setTextColor(textColorNormal);
+    textViewButtonText.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimension(R.dimen
+        .bottom_bar_text_normal));
   }
 
   public void setPressedState(boolean state) {
     this.pressedState = state;
     if (pressedState) {
-      onReleased();
-    } else {
       onPressed();
+    } else {
+      onReleased();
     }
   }
 
-  public boolean getPressedState() {
-    return this.pressedState;
+  public BottomBarButton setButtonDrawables(Drawable normalState, Drawable pressedState) {
+    this.buttonNormalDrawable = normalState;
+    this.buttonPressedDrawable = pressedState;
+    return this;
   }
 
-  public int getID() {
-    return id;
+  public BottomBarButton setButtonText(String text) {
+    this.buttonText = text;
+    return this;
+  }
+
+  public BottomBarButton setTextColors(int normalState, int pressedState) {
+    this.textColorNormal = normalState;
+    this.textColorPressed = pressedState;
+    return this;
+  }
+
+  public boolean isPressedState() {
+    return this.pressedState;
   }
 }

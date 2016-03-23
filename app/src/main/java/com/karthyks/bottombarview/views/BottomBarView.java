@@ -6,35 +6,26 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.karthyks.bottombarview.R;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class BottomBarView extends FrameLayout implements View.OnClickListener {
-
-  public static final int THEME_DARK = 0;
-  public static final int THEME_LIGHT = 1;
-
-  private List<BottomBarButton> buttonIDs;
-
+public class BottomBarView extends LinearLayout {
   private static final String TAG = BottomBarView.class.getSimpleName();
-  private LinearLayout parentFrame;
 
-  public BottomBarView(Context context) {
-    super(context);
-  }
+  private int bottomBarColor;
+  private LinearLayout parentFrame;
 
   public BottomBarView(Context context, AttributeSet attrs) {
     super(context, attrs);
     init(attrs);
   }
 
+  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public BottomBarView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     init(attrs);
@@ -47,63 +38,25 @@ public class BottomBarView extends FrameLayout implements View.OnClickListener {
   }
 
   private void init(AttributeSet attrs) {
-    buttonIDs = new LinkedList<>();
     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
     this.setLayoutParams(layoutParams);
     this.setFocusableInTouchMode(true);
     this.addView(getViewContent());
-
     TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(attrs,
         R.styleable.BottomBarView, 0, 0);
-    TypedArray drawables = getResources().obtainTypedArray(R.array.drawable_id);
-    TypedArray buttonTexts = getResources().obtainTypedArray(R.array.button_text);
     try {
-      setTheme(typedArray.getInteger(R.styleable.BottomBarView_bottomBarTheme, -1));
-      int noButtons = typedArray.getInteger(R.styleable.BottomBarView_noOfButtons, -1);
-      if (noButtons > 0) {
-        for (int i = 0; i < noButtons; i++) {
-          int id = BottomBarButton.DEFAULT_ID + (BottomBarButton.MULTIPLICATION_FACTOR + i);
-          addButton(drawables.getResourceId(i, -1), buttonTexts.getString(i), id);
-        }
-      }
+      bottomBarColor = typedArray.getColor(R.styleable.BottomBarView_bottomBarColor, -1);
+      setBgColor(bottomBarColor);
+      typedArray.recycle();
     } catch (Exception e) {
       Log.e(TAG, "Initializing in XML failed: Set required fields " + e.toString());
     }
-    typedArray.recycle();
-    drawables.recycle();
-    buttonTexts.recycle();
   }
 
-  private void setTheme(int theme) {
-    switch (theme) {
-      case THEME_DARK:
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-          parentFrame.setBackgroundColor(getContext().getResources().getColor(R.color.bottomBarDark,
-              null));
-        } else {
-          parentFrame.setBackgroundColor(getContext().getResources().getColor(
-              R.color.bottomBarDark));
-        }
-        break;
-      case THEME_LIGHT:
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-          parentFrame.setBackgroundColor(getContext().getResources().getColor(
-              R.color.bottomBarLight, null));
-        } else {
-          parentFrame.setBackgroundColor(getContext().getResources().getColor(
-              R.color.bottomBarLight));
-        }
-        break;
-      default:
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-          parentFrame.setBackgroundColor(getContext().getResources().getColor(R.color.bottomBarDark,
-              null));
-        } else {
-          parentFrame.setBackgroundColor(getContext().getResources().getColor(
-              R.color.bottomBarDark));
-        }
-    }
+  private void setBgColor(int color) {
+    parentFrame.setBackgroundColor(color);
+    Log.d(TAG, "getViewContent: " + parentFrame.getHeight());
   }
 
   private View getViewContent() {
@@ -112,28 +65,16 @@ public class BottomBarView extends FrameLayout implements View.OnClickListener {
     return view;
   }
 
-  private void addButton(int drawable, String text, int id) {
-    parentFrame.addView(getButtonAsView(drawable, text, id));
+  public void addAsChild(int layoutId) {
+    View view = LayoutInflater.from(getContext()).inflate(layoutId, this, false);
+    parentFrame.addView(view);
   }
 
-  private View getButtonAsView(final int drawable, String text, int id) {
-    BottomBarButton button = new BottomBarButton(getContext(), drawable, text, id, this);
-    buttonIDs.add(button);
-    return button;
+  public void setWeight(int weight) {
+    parentFrame.setWeightSum(3);
   }
 
-  @Override public void onClick(View v) {
-    BottomBarButton buttonClass = (BottomBarButton) v;
-    for (int i = 0; i < buttonIDs.size(); i++) {
-      if (buttonIDs.get(i).getID() == buttonClass.getID()) {
-        if (buttonIDs.get(i).getPressedState()) {
-          buttonIDs.get(i).onReleased();
-        } else {
-          buttonIDs.get(i).onPressed();
-        }
-      } else {
-        buttonIDs.get(i).onReleased();
-      }
-    }
+  public LinearLayout getParentFrame() {
+    return parentFrame;
   }
 }
