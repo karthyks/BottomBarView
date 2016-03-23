@@ -6,10 +6,8 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.karthyks.bottombarview.R;
@@ -19,21 +17,25 @@ public class BottomBarView extends LinearLayout {
 
   private int bottomBarColor;
   private LinearLayout parentFrame;
+  private Context context;
 
   public BottomBarView(Context context, AttributeSet attrs) {
     super(context, attrs);
+    this.context = context;
     init(attrs);
   }
 
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public BottomBarView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
+    this.context = context;
     init(attrs);
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   public BottomBarView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
+    this.context = context;
     init(attrs);
   }
 
@@ -43,7 +45,7 @@ public class BottomBarView extends LinearLayout {
     this.setLayoutParams(layoutParams);
     this.setFocusableInTouchMode(true);
     this.addView(getViewContent());
-    TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(attrs,
+    TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs,
         R.styleable.BottomBarView, 0, 0);
     try {
       bottomBarColor = typedArray.getColor(R.styleable.BottomBarView_bottomBarColor, -1);
@@ -60,13 +62,13 @@ public class BottomBarView extends LinearLayout {
   }
 
   private View getViewContent() {
-    View view = LayoutInflater.from(getContext()).inflate(R.layout.view_bottom_bar, this, false);
+    View view = LayoutInflater.from(context).inflate(R.layout.view_bottom_bar, this, false);
     parentFrame = (LinearLayout) view.findViewById(R.id.bottomBarParentFrame);
     return view;
   }
 
   public void addAsChild(int layoutId) {
-    View view = LayoutInflater.from(getContext()).inflate(layoutId, this, false);
+    View view = LayoutInflater.from(context).inflate(layoutId, this, false);
     parentFrame.addView(view);
   }
 

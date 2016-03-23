@@ -81,30 +81,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   @Override public void onClick(View v) {
-    switch (v.getId()) {
-      case R.id.bbn_waiting:
-        if (bbnWaiting.isPressedState()) {
-          bbnWaiting.setPressedState(false);
-        } else {
-          bbnWaiting.setPressedState(true);
-        }
-
-        break;
-      case R.id.bbn_boarded:
-        if (bbnBoarded.isPressedState()) {
-          bbnBoarded.setPressedState(false);
-        } else {
-          bbnBoarded.setPressedState(true);
-        }
-        break;
-      case R.id.bbn_reached:
-        if (bbnReached.isPressedState()) {
-          bbnReached.setPressedState(false);
-        } else {
-          bbnReached.setPressedState(true);
-        }
-        break;
-      default:
+    if (v.getId() == R.id.bbn_waiting) {
+      if (bbnWaiting.isPressedState()) {
+        bbnWaiting.setPressedState(false);
+      } else {
+        bbnWaiting.setPressedState(true);
+      }
+    } else if (v.getId() == R.id.bbn_boarded) {
+      if (bbnBoarded.isPressedState()) {
+        bbnBoarded.setPressedState(false);
+      } else {
+        bbnBoarded.setPressedState(true);
+      }
+    } else if (v.getId() == R.id.bbn_reached) {
+      if (bbnReached.isPressedState()) {
+        bbnReached.setPressedState(false);
+      } else {
+        bbnReached.setPressedState(true);
+      }
     }
   }
 }

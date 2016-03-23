@@ -30,27 +30,32 @@ public class BottomBarButton extends LinearLayout {
   private int textColorPressed;
 
   private String buttonText;
+  private Context context;
 
   public BottomBarButton(Context context) {
     super(context);
+    this.context = context;
   }
 
   public BottomBarButton(Context context, AttributeSet attrs) {
     super(context, attrs);
+    this.context = context;
   }
 
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public BottomBarButton(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
+    this.context = context;
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   public BottomBarButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
+    this.context = context;
   }
 
   public void build() {
-    View view = LayoutInflater.from(getContext()).inflate(R.layout.custom_button, this, false);
+    View view = LayoutInflater.from(context).inflate(R.layout.custom_button, this, false);
     imageViewButtonBg = (ImageView) view.findViewById(R.id.img_button_bg);
     imageViewButtonBg.setImageDrawable(buttonNormalDrawable);
     pressedState = false;
