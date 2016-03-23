@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import com.karthyks.bottombarview.R;
@@ -18,6 +20,8 @@ public class BottomBarView extends LinearLayout {
   private int bottomBarColor;
   private LinearLayout parentFrame;
   private Context context;
+
+  private Animation animShow, animHide;
 
   public BottomBarView(Context context, AttributeSet attrs) {
     super(context, attrs);
@@ -54,6 +58,12 @@ public class BottomBarView extends LinearLayout {
     } catch (Exception e) {
       Log.e(TAG, "Initializing in XML failed: Set required fields " + e.toString());
     }
+    initAnimation();
+  }
+
+  private void initAnimation() {
+    animShow = AnimationUtils.loadAnimation(context, R.anim.bottom_bar_show);
+    animHide = AnimationUtils.loadAnimation( context, R.anim.bottom_bar_hide);
   }
 
   public void setBgColor(int color) {
@@ -78,5 +88,15 @@ public class BottomBarView extends LinearLayout {
 
   public LinearLayout getParentFrame() {
     return parentFrame;
+  }
+
+  public void show() {
+    this.setVisibility(VISIBLE);
+    this.startAnimation(animShow);
+  }
+
+  public void hide() {
+    this.startAnimation(animHide);
+    this.setVisibility(INVISIBLE);
   }
 }

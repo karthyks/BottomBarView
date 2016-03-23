@@ -37,11 +37,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
           public void onScrollChanged() {
             if (scrollView.getScrollY() > scrollY) {
               scrollY = scrollView.getScrollY();
-              bottomBarView.setVisibility(View.INVISIBLE);
+              if(bottomBarView.getVisibility() == View.VISIBLE) {
+                bottomBarView.hide();
+              }
               Log.d(TAG, "onScrollChanged: upwards");
             } else {
               scrollY = scrollView.getScrollY();
-              bottomBarView.setVisibility(View.VISIBLE);
+              if(bottomBarView.getVisibility() == View.INVISIBLE) {
+                bottomBarView.show();
+              }
               Log.d(TAG, "onScrollChanged: downwards");
             }
           }
