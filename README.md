@@ -35,11 +35,14 @@ Import as a module into your android project.
   include ':yourprojectname', ':bottomBarNavigation'
   </code>
 </pre>
-<h5>Add BottomBar in your preferred layout</h5>
+<h5>Add BottomBar in your preferred layout : </h5>
+```xml
 <com.karthyks.bottombarview.views.BottomBarView
           android:id="@+id/bottom_bar"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"/> 
+          android:layout_height="match_parent">
+</com.karthyks.bottombarview.views.BottomBarView>
+```
 <h5>In your activity class : </h5>
 <pre>
   <code>
@@ -50,33 +53,28 @@ Import as a module into your android project.
 
 <h5>create a layout xml and add buttons in it</h5>
 <p>include_bottom_bar_buttons.xml</p>
+```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
               android:orientation="horizontal">
-
     <com.karthyks.bottombarview.views.BottomBarButton
         android:id="@+id/btn_waiting"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </com.karthyks.bottombarview.views.BottomBarButton>
+        android:layout_height="wrap_content"/>
 
     <com.karthyks.bottombarview.views.BottomBarButton
         android:id="@+id/btn_boarded"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </com.karthyks.bottombarview.views.BottomBarButton>
+        android:layout_height="wrap_content"/>
 
     <com.karthyks.bottombarview.views.BottomBarButton
         android:id="@+id/btn_reached"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </com.karthyks.bottombarview.views.BottomBarButton>
+        android:layout_height="wrap_content"/>
 </LinearLayout>
+```
 
 <h5>Then add the buttons to your bottomBarView in your activity : </h5>
 <pre>
